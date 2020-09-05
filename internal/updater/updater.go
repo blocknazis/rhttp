@@ -1,6 +1,7 @@
 package updater
 
 import (
+	"log"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -20,6 +21,7 @@ func New(repoURL string, period time.Duration, blacklist []string) *Updater {
 // ScheduleUpdates schedules the repository updates
 func (updater *Updater) ScheduleUpdates() error {
 	// Update the git repository
+	log.Println("Updating data...")
 	err := updater.Update()
 	if err != nil {
 		return err

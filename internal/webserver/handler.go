@@ -13,7 +13,7 @@ func handler(repoUpdater *updater.Updater) fasthttp.RequestHandler {
 		GenerateIndexPages: true,
 		PathNotFound: func(ctx *fasthttp.RequestCtx) {
 			ctx.SetStatusCode(fasthttp.StatusNotFound)
-			ctx.SetBodyString("List not found.")
+			ctx.SetBodyString("File not found.")
 		},
 	}
 	fsHandler := fs.NewRequestHandler()
@@ -23,7 +23,7 @@ func handler(repoUpdater *updater.Updater) fasthttp.RequestHandler {
 		// Check if the updater is in updating state
 		if repoUpdater.State == updater.StateUpdating {
 			ctx.SetStatusCode(fasthttp.StatusServiceUnavailable)
-			ctx.SetBodyString("Lists are being updated...")
+			ctx.SetBodyString("Repository is being updated...")
 			return
 		}
 
