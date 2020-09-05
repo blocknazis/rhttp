@@ -4,10 +4,10 @@ import "time"
 
 // Updater represents a repository updater
 type Updater struct {
-	RepoURL    string
-	Period     time.Duration
-	LastUpdate time.Time
-	State      State
+	RepoURL   string
+	Period    time.Duration
+	Blacklist []string
+	State     State
 }
 
 // State represents the state of a repository updater

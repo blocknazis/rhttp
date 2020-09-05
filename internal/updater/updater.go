@@ -3,15 +3,17 @@ package updater
 import (
 	"os"
 	"os/exec"
+	"path/filepath"
 	"time"
 )
 
 // New creates a new repository updater
-func New(repoURL string, period time.Duration) *Updater {
+func New(repoURL string, period time.Duration, blacklist []string) *Updater {
 	return &Updater{
-		RepoURL: repoURL,
-		Period:  period,
-		State:   StateUpdating,
+		RepoURL:   repoURL,
+		Period:    period,
+		Blacklist: blacklist,
+		State:     StateUpdating,
 	}
 }
 
@@ -46,6 +48,14 @@ func (updater *Updater) Update() error {
 	err = cmd.Run()
 	if err != nil {
 		return err
+	}
+
+	// Remove all the blacklisted files and folders
+	for _, blacklistedPath := range updater.Blacklist {
+		err = os.RemoveAll(filepath.Join("./data", blacklistedPath))
+		if err != nil {
+			return err
+		}
 	}
 
 	// Set the state of the updater to 'available'
