@@ -1,0 +1,13 @@
+version: "3"
+
+services:
+    rhttp:
+        images: ghcr.io/blocknazis/rhttp
+        container_name: rhttp
+        restart: unless-stopped
+        ports:
+            - 8080:8080
+        environment:
+            RHTTP_REPO_URL: https://github.com/username/repo
+            RHTTP_UPDATE_PERIOD: 3h
+            RHTTP_BLACKLIST: .git/;;LICENSE;;README.md
